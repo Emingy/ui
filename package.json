@@ -13,12 +13,8 @@
         "format": "prettier --write 'packages/**/*.{ts,tsx,js,jsx,json,css,md}'",
         "test": "rstest",
         "check-circular-dependency": "pnpm -r --if-present check-circular-dependency",
-        "precommit": "pnpm test && pnpm check-circular-dependency && pnpm build && pnpx lint-staged"
-    },
-    "husky": {
-        "hooks": {
-            "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
-        }
+        "precommit": "pnpm test && pnpm check-circular-dependency && pnpm build && pnpx lint-staged",
+        "cm": "cz"
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx}": [
@@ -51,7 +47,7 @@
         "@testing-library/react": "16.3.0",
         "@types/react": "19.2.2",
         "@types/react-dom": "19.2.2",
-        "cz": "1.8.2",
+        "cz-conventional-changelog": "^3.3.0",
         "dpdm": "3.14.0",
         "eslint": "9.37.0",
         "husky": "9.1.7",
@@ -62,14 +58,15 @@
         "storybook": "9.1.15",
         "storybook-addon-rslib": "2.1.2",
         "storybook-react-rsbuild": "2.1.4",
-        "stylelint-config-css-modules": "4.5.1",
-        "stylelint-config-standard": "39.0.1",
-        "stylelint-order": "7.0.0",
-        "stylelint-scss": "6.12.1",
         "typescript": "5.9.3"
     },
     "engines": {
         "node": "22",
         "pnpm": "10"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
 }
