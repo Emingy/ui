@@ -1,0 +1,47 @@
+name: CI Checks
+
+on:
+    pull_request:
+        branches: [master]
+
+jobs:
+    prepare:
+        name: ⚙️ Prepare project
+        runs-on: ubuntu-latest
+        steps:
+            - name: Prepare
+              uses: ./.github/actions/prepare-project/
+
+    tests:
+        name: 🧪 Testing
+        runs-on: ubuntu-latest
+        needs: prepare
+        steps:
+            - name: Use prepared project
+              uses: actions/download-artifact@v4
+              with:
+                  name: prepared-repository
+                  path: .
+
+            - name: Run tests
+              run: pnpm test
+
+    checks:
+        name: 🔍 Static Analysis & Code Quality
+        runs-on: ubuntu-latest
+        needs: prepare
+        steps:
+            - name: Use prepared project
+              uses: actions/download-artifact@v4
+              with:
+                  name: prepared-repository
+                  path: .
+
+            - name: Check circular dependency
+              run: pnpm check-circular-dependency
+
+            - name: Check linting
+              run: pnpm lint
+
+            - name: Check format
+              run: pnpm format
