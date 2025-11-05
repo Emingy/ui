@@ -17,6 +17,20 @@ permissions:
     id-token: write
 
 jobs:
+    tests:
+        name: 🧪 Testing
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Prepare
+              uses: ./.github/actions/prepare-project/
+
+            - name: Run tests
+              run: pnpm test
+
     publish-beta:
         name: 🧪 Publish Beta to npm ${{ github.event.inputs.package_name }}
         runs-on: ubuntu-latest
@@ -24,17 +38,12 @@ jobs:
         if: github.ref_name != 'master'
 
         steps:
-            - name: Checkout Source Branch
+            - name: Checkout code
               uses: actions/checkout@v4
               with:
-                  ref: ${{ github.ref }}
                   fetch-depth: 0
-
-            - name: Install node and pnpm
-              uses: ./.github/actions/setup-node-and-pnpm/
-
-            - name: Install dependencies
-              run: pnpm install --frozen-lockfile
+            - name: Prepare
+              uses: ./.github/actions/prepare-project/
 
             - name: Determine Package Filter Argument
               id: filter_arg
