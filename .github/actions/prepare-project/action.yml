@@ -1,4 +1,5 @@
-name: 'Setup node and pnpm'
+name: 'Prepare project'
+description: 'installs dependencies.'
 
 runs:
     using: 'composite'
@@ -14,3 +15,7 @@ runs:
               node-version: '22'
               cache: 'pnpm'
               registry-url: 'https://registry.npmjs.org'
+
+        - name: Install dependencies
+          run: pnpm install --frozen-lockfile
+          shell: bash

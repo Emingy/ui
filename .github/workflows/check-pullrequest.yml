@@ -5,23 +5,16 @@ on:
         branches: [master]
 
 jobs:
-    prepare:
-        name: ⚙️ Prepare project
-        runs-on: ubuntu-latest
-        steps:
-            - name: Prepare
-              uses: ./.github/actions/prepare-project/
-
     tests:
         name: 🧪 Testing
         runs-on: ubuntu-latest
-        needs: prepare
         steps:
-            - name: Use prepared project
-              uses: actions/download-artifact@v4
+            - name: Checkout code
+              uses: actions/checkout@v4
               with:
-                  name: prepared-repository
-                  path: .
+                  fetch-depth: 0
+            - name: Prepare
+              uses: ./.github/actions/prepare-project/
 
             - name: Run tests
               run: pnpm test
@@ -29,13 +22,13 @@ jobs:
     checks:
         name: 🔍 Static Analysis & Code Quality
         runs-on: ubuntu-latest
-        needs: prepare
         steps:
-            - name: Use prepared project
-              uses: actions/download-artifact@v4
+            - name: Checkout code
+              uses: actions/checkout@v4
               with:
-                  name: prepared-repository
-                  path: .
+                  fetch-depth: 0
+            - name: Prepare
+              uses: ./.github/actions/prepare-project/
 
             - name: Check circular dependency
               run: pnpm check-circular-dependency
