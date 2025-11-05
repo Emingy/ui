@@ -10,8 +10,10 @@
         "storybook": "storybook dev -p 3000 --no-open",
         "lint": "eslint",
         "lint:fix": "eslint --fix",
-        "format": "prettier --check 'packages/**/*.{ts,tsx,js,jsx,json,css,md}'",
-        "format:fix": "prettier --write 'packages/**/*.{ts,tsx,js,jsx,json,css,md}'",
+        "lint:scss": "stylelint \"**/*.scss\" --ignore-path .gitignore",
+        "lint:scss-fix": "stylelint \"**/*.scss\" --ignore-path .gitignore --fix",
+        "format": "prettier --check '**/*.{ts,tsx,js,jsx,json,css,md}'",
+        "format:fix": "prettier --write '**/*.{ts,tsx,js,jsx,json,css,md}'",
         "test": "rstest",
         "check-circular-dependency": "pnpm -r --if-present check-circular-dependency",
         "precommit": "pnpm test && pnpm check-circular-dependency && pnpm build && pnpx lint-staged",
@@ -24,6 +26,9 @@
         ],
         "*.{json,css,md}": [
             "prettier --write"
+        ],
+        "*.{scss}": [
+            "stylelint --fix"
         ]
     },
     "dependencies": {
@@ -51,6 +56,7 @@
         "cz-conventional-changelog": "^3.3.0",
         "dpdm": "3.14.0",
         "eslint": "9.37.0",
+        "stylelint": "16.25.0",
         "husky": "9.1.7",
         "jsdom": "26.1.0",
         "lint-staged": "16.2.4",
