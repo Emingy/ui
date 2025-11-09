@@ -4,19 +4,25 @@ runs:
   using: "composite"
   steps:
     - name: Check circular dependency
+      shell: bash
       run: pnpm check-circular-dependency
 
     - name: Check linting
+      shell: bash
       run: pnpm lint
 
     - name: Check linting scss
+      shell: bash
       run: pnpm lint:scss
 
     - name: Check format
+      shell: bash
       run: pnpm format
 
     - name: Knip
+      shell: bash
       run: pnpm knip
 
     - name: Ts coverage
+      shell: bash
       run: pnpm coverage:ts
